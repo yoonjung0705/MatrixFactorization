@@ -1,5 +1,5 @@
 # MatrixFactorization_ConvexOptimizatiton
-This is a repository that contains functions related to matrix factorization and convex optimization written in C, but extended for use in MATLAB via the CMEX environment. Many of the functions will be uploaded upon journal article submission. 
+This is a repository that contains functions related to matrix factorization and convex optimization written in C, but also extended for use in MATLAB via the CMEX environment. Many of the functions will be uploaded upon journal article submission. 
 
 The following two functions for matrix factorization presented here are for Cholesky updates. 
 1) Cholesky insert: Given the original Cholesky factorization of ATA, this function returns the updated Cholesky factorization of ATA when another column is added to A. This should not be confused with the Cholesky rank-1 update.
