@@ -7,39 +7,35 @@
 
 /* Definition of chol_insert */
 void chol_insert(double* R,double* new_col, double* X, int nrows, int full_size, int support_size){
-    
-	int i,j,k;
-	double diag_k, R_kk, sum, tmp;
-	double* col_k = (double *)malloc(sizeof(double) * full_size); // FIXME: consider setting this as a global variable with a predetermined size
-	double* R_k = (double *)malloc(sizeof(double) * full_size); // FIXME: this as well
-    
+    int i,j,k;
+    double diag_k, R_kk, sum, tmp;
+    double* col_k = (double *)malloc(sizeof(double) * full_size); // FIXME: consider setting this as a global variable with a predetermined size
+    double* R_k = (double *)malloc(sizeof(double) * full_size); // FIXME: this as well
     // FIXME: handle case where R is empty
-        
     diag_k = 0;
     for(i=0;i<nrows;i++)
-    	diag_k += new_col[i]*new_col[i];  // diag_k = new_col'*new_col;
+        diag_k += new_col[i]*new_col[i];  // diag_k = new_col'*new_col;
     
     for(i=0;i<support_size;i++){
-    	col_k[i] = 0;
+        col_k[i] = 0;
         j=i*nrows;
-        	for(k=0;k<nrows;k++)
-        		col_k[i] += new_col[k]*X[j+k]; // only accessing the initialized part of X. (i goes only to support_size, not full_size)
-        	} // col_k = new_col'*X; % elements of column k in X'X matrix
-    	
+            for(k=0;k<nrows;k++)
+                col_k[i] += new_col[k]*X[j+k]; // only accessing the initialized part of X. (i goes only to support_size, not full_size)
+            } // col_k = new_col'*X; % elements of column k in X'X matrix
     /* forward substitution */
     /* (R_k = R'\col_k';). FIXME: include the case when one of the diagonal elements of R is zero
      * For example, when an atom is selected again?
      */
     R_k[0] = col_k[0] / R[0];
     for(i=1;i<support_size;i++){
-    	sum = 0;
-    	j = i * full_size;
-    	for(k=0;k<i;k++)
-    		sum += R[j+k] * R_k[k];
-    	
-    		R_k[i] = ( col_k[i] - sum ) / R[i+j];
+        sum = 0;
+        j = i * full_size;
+        for(k=0;k<i;k++)
+            sum += R[j+k] * R_k[k];
+    		
+            R_k[i] = ( col_k[i] - sum ) / R[i+j];
     }
-    
+
     /* R_kk = sqrt(diag_k - R_k'*R_k); */
     sum = 0;
     for(i=0;i<support_size;i++){
@@ -117,21 +113,6 @@ void chol_delete(double* R, int col, int full_size, int support_size){
 		  	  R[(k+1) + full_size * j] = G[1]*x1 + G[3]*x2;
 		  }
 	  }
-	  
-	  
 	}
-	
 	free(G);
-	
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
